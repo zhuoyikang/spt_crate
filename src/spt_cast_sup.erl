@@ -16,7 +16,7 @@
 %% 开启一个连接服务进程.
 start_caster(Cast) ->
   supervisor:start_child(?MODULE, [Cast]).
-  
+
 init([]) ->
   {ok,
    {_SupFlags = {simple_one_for_one, ?MAX_RESTART, ?MAX_TIME},

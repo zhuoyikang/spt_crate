@@ -57,10 +57,10 @@ post事件的第2个参数将会被原样传递给注册的函数，使用例子
 
 该模块用来给一组进程发送广播信号，可支持动态的添加和删除进程；开放以下几个api：
 
-* join(Pid, PidMsg):加入广播进程组，Pid为调用进程的注册原子，Msg为加入的进程号；
-* quit(Pid, PidMsg):退出广播进程组，参数同上
-* send(Pid, Msg):向某个进程组广播消息Msg，Pid为调用进程的注册原子
-* stop(Pid):让某个进程退出，返回{stop, normal, Request}
+* join(Atom, Pid):加入广播进程组，Atom为组播进程的注册原子，PID为想要加入的进程ID；
+* quit(Atom, Pid):退出广播进程组，参数同上。
+* send(Atom, Msg):向某个进程组广播消息Msg，此消息将会被立即广播到其组内的其他组员。
+* stop(Atom):让组播进程退出。
 
 使用例子如下：
 
@@ -68,3 +68,9 @@ post事件的第2个参数将会被原样传递给注册的函数，使用例子
     spt_cast:join(test, Pid1),
     spt_cast:send(test, "test"),
     spt_cast:quit(test, Pid1).
+
+*`应用场景`*
+
+*聊天：* 在游戏服务器中有大量的组播操作，比如全局聊天频道，程序启动可以用 `spt_cast_sup:start_caster(chat_all)`开启一个组播进程，然后让每个登陆的进程都加入它，之后便可以通过spt_cast:send(chat_all， ChatMsg)发送聊天消息。
+*场景：* 当玩家进程一个游戏场景时加入广播组，然后实时发送它的位置信息。
+*全服广播：* 现在服务器中玩家获取到一项NB装备或者成功挑战了竞技场排名靠前的玩家时，会发全服广播。

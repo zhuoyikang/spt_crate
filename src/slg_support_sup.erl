@@ -40,4 +40,12 @@ init([]) ->
     worker,
     [spt_reloader]
    },
-  {ok, { {one_for_one, 5, 10}, [Notify, Reloader]} }.
+  Caster = {
+    spt_cast_sup,
+    {supervisor, start_link, [{local, spt_cast_sup}, spt_cast_sup, []]},
+    permanent,
+    infinity,
+    supervisor,
+    []
+   },
+  {ok, { {one_for_one, 5, 10}, [Notify, Reloader, Caster]} }.
