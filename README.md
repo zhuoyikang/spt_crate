@@ -3,6 +3,7 @@
 * spt_reloader-热更新
 * spt_notify-事件注册/分发
 * spt_smerl-动态模块编程库
+* spt_cast-进程组广播
 
 ### 1.spt_reloader-热更新
 
@@ -51,3 +52,19 @@ post事件的第2个参数将会被原样传递给注册的函数，使用例子
     foo:bar(),   % returns 2``
     spt_smerl:has_func(M2, bar, 0). % returns true
 
+
+### 4.spt_cast-进程组广播
+
+该模块用来给一组进程发送广播信号，可支持动态的添加和删除进程；开放以下几个api：
+
+* join(Pid, PidMsg):加入广播进程组，Pid为调用进程的注册原子，Msg为加入的进程号；
+* quit(Pid, PidMsg):退出广播进程组，参数同上
+* send(Pid, Msg):向某个进程组广播消息Msg，Pid为调用进程的注册原子
+* stop(Pid):让某个进程退出，返回{stop, normal, Request}
+
+使用例子如下：
+
+    spt_cast_sup:start_caster(test),
+    spt_cast:join(test, Pid1),
+    spt_cast:send(test, "test"),
+    spt_cast:quit(test, Pid1).
