@@ -65,9 +65,10 @@ post事件的第2个参数将会被原样传递给注册的函数，使用例子
 使用例子如下：
 
     spt_cast_sup:start_caster(test),
-    spt_cast:join(test, Pid1),
-    spt_cast:send(test, "test"),
-    spt_cast:quit(test, Pid1).
+    spt_cast:join(test, Pid1),% 同步
+    spt_cast:send(test, "test"), % 同步
+    spt_cast:quit(test, Pid1).% 同步
+    spt_cast:cast(test, "test"),% 异步
 
 *`应用场景`*
 
