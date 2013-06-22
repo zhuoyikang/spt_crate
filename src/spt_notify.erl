@@ -29,7 +29,7 @@ ubsub(Event, Fun) ->
 
 post(Event, Param) ->
   L = ets:lookup(spt_notify_m, Event),
-  [Fun(Param)  || {_, Fun} <- L].
+  [Fun(Param) || {_, Fun} <- L].
 
 handle_cast(stop, State) ->
   {stop, normal, State};
