@@ -1,6 +1,7 @@
 -module(spt_atom).
 -export([atom_suffix/2, atom_prefix/2]).
 -export([binary_to_term/1, term_to_binary/1]).
+-export([mysql_escape/1]).
 
 atom_suffix(Table, Suffix) when is_list(Suffix)->
   L = atom_to_list(Table) ++ "_" ++ Suffix,
@@ -36,3 +37,9 @@ term_to_binary(Term) ->
   R = io_lib:format("~p", [Term]),
   S = lists:flatten(R),
   list_to_binary(S).
+
+
+
+%% 对binary进行escape操作.
+mysql_escape(<<Binary/binary>>) ->
+  binary:replace(Binary, [ <<"'">>,<<"\"">>], <<"\\">>, [global, {insert_replaced,1}]).
