@@ -1,7 +1,7 @@
 -module(spt_atom).
 -export([atom_suffix/2, atom_prefix/2]).
 -export([binary_to_term/1, term_to_binary/1]).
--export([mysql_escape/1]).
+-export([mysql_escape/1, mysql_unescape/1]).
 
 atom_suffix(Table, Suffix) when is_list(Suffix)->
   L = atom_to_list(Table) ++ "_" ++ Suffix,
@@ -42,4 +42,7 @@ term_to_binary(Term) ->
 
 %% 对binary进行escape操作.
 mysql_escape(<<Binary/binary>>) ->
-  binary:replace(Binary, [ <<"'">>,<<"\"">>], <<"\\">>, [global, {insert_replaced,1}]).
+  binary:replace(Binary, <<"\"">>, <<"\\">>, [global, {insert_replaced,1}]).
+
+mysql_unescape(<<Binary/binary>>) ->
+  binary:replace(Binary, <<"\\">>, <<"">>, [global]).
