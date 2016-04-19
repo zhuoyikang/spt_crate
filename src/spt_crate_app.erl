@@ -1,4 +1,4 @@
--module(slg_support_app).
+-module(spt_crate_app).
 
 -behaviour(application).
 
@@ -10,7 +10,7 @@
 %% ===================================================================
 
 start(_StartType, _StartArgs) ->
-    slg_support_sup:start_link().
+    spt_crate_sup:start_link().
 
 stop(_State) ->
     ok.

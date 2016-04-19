@@ -1,4 +1,4 @@
-{application, slg_support,
+{application, spt_crate,
  [
   {description, ""},
   {vsn, "1"},
@@ -7,6 +7,6 @@
                   kernel,
                   stdlib
                  ]},
-  {mod, { slg_support_app, []}},
+  {mod, { spt_crate_app, []}},
   {env, []}
  ]}.
