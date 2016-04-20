@@ -91,7 +91,7 @@ handle_info(Info, State) ->
     case {Info,Status} of
         {init,undefined} ->
             Ret = case catch evaluate(Mod,handle_info,[Info,Rs]) of X -> X end,
-            case erlang:element(1,Ret) of
+            case catch erlang:element(1,Ret) of
                 inited -> ignore;
                 E ->
                     io:format("Mode init failed mod ~p reason ~p", [Mod,E]),
